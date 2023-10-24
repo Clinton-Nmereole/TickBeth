@@ -27,6 +27,13 @@ export const ctx = new Elysia({
   .decorate("db", db)
   .decorate("config", config)
   .decorate("auth", auth)
+  .derive(async (ctx) => {
+    const authRequest = ctx.auth.handleRequest(ctx);
+    const session = await authRequest.validate();
+
+    return { session };
+  })
+
   .use(bethStack())
   .use(logger(loggerConfig))
   .use(

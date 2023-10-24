@@ -6,12 +6,6 @@ import { ctx } from "../context";
 
 export const index = new Elysia()
   .use(ctx)
-  .derive(async (ctx) => {
-    const authRequest = ctx.auth.handleRequest(ctx);
-    const session = await authRequest.validate();
-
-    return { session };
-  })
   .get("/", async ({ htmlStream, session, db }) => {
     return htmlStream(() => (
       <BaseHtml>

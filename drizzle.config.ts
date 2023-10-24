@@ -8,7 +8,7 @@ const dbCredentials = {
 };
 
 export default {
-  schema: "./src/db/schema/index.ts",
+  schema: "./src/db/primary/schema/index.ts",
   driver: "turso",
   dbCredentials,
   verbose: true,

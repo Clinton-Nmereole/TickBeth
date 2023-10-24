@@ -2,7 +2,7 @@ export function redirect({
     set,
     headers
 }: {
-    headers: Record<string, string>;
+    headers: Record<string, string | null>;
     set: {
         headers: Record<string, string> & {
             ["Set-Cookie"]?: string | string[];

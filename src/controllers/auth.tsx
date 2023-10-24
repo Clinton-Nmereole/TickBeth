@@ -88,7 +88,7 @@ export const authController = new Elysia({
         redirect({
             set: set,
             headers: headers,
-        }, "/",);
+        }, "/new-user",);
 
     } catch (e) {
         log.error(e, "Error authenticating with google");
