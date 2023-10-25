@@ -31,7 +31,7 @@ export const login = new Elysia()
           </div>
               <a
                 hx-boost="false"
-                href="/login/google"
+                href="/api/auth/login/google"
                 class="display-block rounded-lg bg-gray-800 p-2 text-center text-white transition duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
               >
                 Sign In with Google

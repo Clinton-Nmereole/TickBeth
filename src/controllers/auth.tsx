@@ -3,10 +3,10 @@ import { LuciaError } from "lucia";
 import { ctx } from "../context";
 import { googleAuth } from "../auth";
 import { serialize } from "bun:jsc";
-import { parseCookie } from "elysia/cookie";
+import { parseCookie } from "lucia/utils";
 import { serializeCookie } from "lucia/utils";
 import { config } from "../config";
-import { redirect } from "../lib"
+import { redirect, syncIfLocal } from "../lib"
 import { OAuthRequestError } from "@lucia-auth/oauth";
 
 class DuplicateEmailError extends Error {
@@ -56,7 +56,7 @@ export const authController = new Elysia({
   })
   .get("/google/callback", async ({set, query, headers, auth, log}) => {
     const { state, code } = query;
-    const cookies = parseCookie(headers['cookie'] || '');
+    const cookies = parseCookie(headers["cookie"] || "");
     const state_cookies = cookies["google_auth_state"];
     if (!state_cookies || !code || !state || state_cookies !== state) {
       set.status = "Unauthorized";
@@ -84,6 +84,7 @@ export const authController = new Elysia({
             attributes: {}
         });
         const sessionCookie = auth.createSessionCookie(session);
+        await syncIfLocal();
         set.headers["Set-Cookie"] = sessionCookie.serialize();
         redirect({
             set: set,
