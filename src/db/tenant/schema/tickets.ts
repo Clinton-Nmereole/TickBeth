@@ -19,7 +19,7 @@ export const tickets = sqliteTable("tickets", {
 );
 
 export const ticketsRelations = relations(tickets, ({ many }) => ({
-    chats: many(chats)
+    chats: many(chats),
 }))
 
 export type Ticket = typeof tickets.$inferSelect;

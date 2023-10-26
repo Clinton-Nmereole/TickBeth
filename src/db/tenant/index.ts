@@ -1,4 +1,4 @@
-import { createClient, type Config } from "@libsql/client";
+import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 import * as schema from "./schema";
 import { unlinkSync } from "fs";
@@ -18,11 +18,11 @@ export function getTenantDb({
         url: fullUrl,
         authToken,
     });
-    const tenantTb = drizzle(tenantClient, { schema, logger: true });
+    const tenantDb = drizzle(tenantClient, { schema, logger: true });
     
     return {
         tenantClient,
-        tenantTb,
+        tenantDb,
     }
 };
 
@@ -51,20 +51,20 @@ export async function pushToTenantDb({
 
     return new Promise((resolve, reject) => {
         const proc = Bun.spawn([
-        'bunx',
-        'drizzle-kit',
-        'push:sqlite',
-        `--config=${tempConfigPath} `
+        "bunx",
+        "drizzle-kit",
+        "push:sqlite",
+        `--config=${tempConfigPath}`
     ], {
-        stdout: input ? 'inherit' : undefined,
-        stdin: input ? 'inherit' : undefined,
+        stdout: input ? "inherit" : undefined,
+        stdin: input ? "inherit" : undefined,
         onExit(subprocess, exitCode, signalCode, error) {
             unlinkSync(tempConfigPath);
             if (exitCode === 0) {
                 resolve(void 0);
             } else {
                 console.error("Error pushing to tenant db", error);
-                reject();
+                reject(error);
             }
             
         }

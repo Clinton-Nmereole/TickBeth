@@ -10,4 +10,4 @@ organizations.forEach(async (org) => {
     });
     console.log("Pushed to tenant db", org.database_name);
     
-})
+});

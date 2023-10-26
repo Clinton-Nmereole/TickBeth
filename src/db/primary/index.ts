@@ -20,8 +20,6 @@ const options = {
 
 export const client = createClient(options[DATABASE_CONNECTION_TYPE]);
 
-if (config.env.DATABASE_CONNECTION_TYPE === "local-replica") {
-  await client.sync();
-}
+await client.sync();
 
 export const db = drizzle(client, { schema, logger: true });

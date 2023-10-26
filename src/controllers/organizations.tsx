@@ -2,19 +2,20 @@ import { Elysia, t } from "elysia";
 import { ctx } from "../context";
 import { createDatabaseId, redirect, syncIfLocal } from "../lib";
 import { pushToTenantDb } from "../db/tenant";
-import { organizations } from "../db/primary/schema";
-import { user } from "../db/primary/schema";
+import { organizations, user } from "../db/primary/schema";
 import { eq } from "drizzle-orm";
 
-export const organizationsController = new Elysia({prefix: "/organizations"}).use(ctx)
+export const organizationsController = new Elysia({prefix: "/organization"}).use(ctx)
 .post("/", async ({ body, session, set, headers, turso, db }) => {
     if (!session) {
-        redirect({set, headers}, "/login");
+        redirect({set, headers}, "/login",);
         return;
     }
     const dbName = `org-${createDatabaseId()}`;
 
-    const {database: {Name}} = await turso.databases.create({
+    const { 
+        database: {Name},
+        } = await turso.databases.create({
         name: dbName,
         group: "tenants", 
     });
@@ -46,19 +47,19 @@ export const organizationsController = new Elysia({prefix: "/organizations"}).us
     
     await syncIfLocal();
 
-    redirect({set, headers}, "/dashboard");
+    redirect({set, headers}, "/dashboard",);
 
 }, {
     body: t.Object({
         organizationName: t.String({
             minLength: 1,
-            maxLength: 50,
+            maxLength: 30,
         }),
     }),
-})
+},)
 .post("/join", async ({ body, session, set, headers, turso, db }) => {
     if (!session) {
-        redirect({set, headers}, "/login");
+        redirect({set, headers}, "/login",);
         return;
     }
 
@@ -80,7 +81,7 @@ export const organizationsController = new Elysia({prefix: "/organizations"}).us
     
     await syncIfLocal();
 
-    redirect({set, headers}, "/dashboard");
+    redirect({set, headers}, "/dashboard",);
 
 }, {
     body: t.Object({
