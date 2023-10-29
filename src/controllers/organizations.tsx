@@ -91,3 +91,6 @@ export const organizationsController = new Elysia({prefix: "/organization"}).use
         }),
     }),
 })
+.post("/test", async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+});
