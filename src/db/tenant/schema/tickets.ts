@@ -5,14 +5,17 @@ import { chats } from "./chats";
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 export const tickets = sqliteTable("tickets", {
     id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-   assigned_employee_id: integer("assigned_employee_id"), 
-   subject: text("subject").notNull(),
-   description: text("description").notNull(),
-   status: text("status",{ enum: ["open", "closed"] }).notNull(),
-   priority: text("priority",{ enum: ["low", "medium", "high"] }).notNull(),
-   created_at: integer("created_at", { mode: "timestamp" }).notNull(),
-   updated_at: integer("updated_at", { mode: "timestamp" }),
-   closed_at: integer("closed_at", { mode: "timestamp" }),
+    assigned_employee_id: integer("assigned_employee_id"),
+    subject: text("subject").notNull(),
+    description: text("description").notNull(),
+    status: text("status", { enum: ["open", "closed"] })
+        .notNull()
+        .$default(() => "open"),
+    created_at: integer("created_at", { mode: "timestamp" })
+        .notNull()
+        .$defaultFn(() => new Date()),
+    updated_at: integer("updated_at", { mode: "timestamp" }),
+    closed_at: integer("closed_at", { mode: "timestamp" }),
 }, (table) => ({
     status_index: index('status_index').on(table.status),
 })
