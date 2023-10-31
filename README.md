@@ -23,3 +23,7 @@
 3. Run `fly secrets set <NAME>=<VALUE>` (probably want to set `NODE_ENV` to `"production"`)
 
 5. Run `fly deploy`
+
+## What is TickBeth?
+
+Tickbeth is a ticketing system for organizations and their employees. It allows people who belong to an organization to open issues as tickets and for employees to fix those issues and close said tickets. Tickbeth allows a chat system that allows those with issues to communicate with employees to help fix said issues. One can create their own organization or join an already existing organization through an organization code. Authentication and logins are all handled by Google's OAuth API, and Turso is used as the database service that helps create multiple organizations with each organizations data stored separately from the rest. This project is inspired by github.com/ethanniser and a full tutorial to this project can be found on youtube at https://www.youtube.com/watch?v=NZpPMlSAez0&list=PLbHoFtW5JkYZZ_aawNaCoZ05Qi5fCPVY-&index=47.
