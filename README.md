@@ -1,6 +1,7 @@
 # This project was created using `create-beth-app`
 ## To open an issue: https://github.com/ethanniser/the-beth-stack
 ## To discuss: https://discord.gg/Z3yUtMfkwa
+## To view live site: Visit https://tickbeth.fly.dev
 
 ### To run locally:
 
